@@ -9,13 +9,17 @@
     </h:head>
     <h:body>
         <f:view>
-            <p:growl id="message" showDetail="true"/>
-
+            <h:form>
+                <p:growl id="message" showDetail="true"/>
+                <p:commandButton value="Regresar" styleClass="rounded-button ui-button-secondary" process="@this" action="registro_persona" icon="pi pi-undo"/>
+            </h:form>
+            
             <h:form>
                 <p:dataTable value="#{aPersona.personas}" var="item">
                     <f:facet name="header">
-                        Registro de personas
+                        Registro de personas                        
                     </f:facet>
+
                     <p:column>
                         <f:facet name="header">
                             <h:outputText value="IdPersona"/>
@@ -50,7 +54,7 @@
                     </p:column>
                     <p:column>
                         <f:facet name="header">
-                            <h:outputText value="Estatura"/>
+                            <h:outputText value="Estatura (m,cm)"/>
                         </f:facet>
                         <h:outputText value="#{item.estatura}"/>
                     </p:column>
@@ -58,16 +62,19 @@
                         <f:facet name="header">
                             <h:outputText value="Genero"/>
                         </f:facet>
-                        <h:outputText value="#{item.genero}"/>
+                        <h:outputText value="#{item.genero eq 'F'?'FEMENINO':'MASCULINO'}"/>
                     </p:column>
                     <p:column>
-                        <p:commandButton value="Eliminar" styleClass="rounded-button ui-button-danger" />
-                        <p:commandButton value="Actualizar" styleClass="rounded-button ui-button-warning" />
-                        <p:commandButton value="Regresar" styleClass="rounded-button ui-button-secondary" process="@this" action="registro_persona"/>
-
+                        <f:facet name="header">
+                            <h:outputText value="Accion"/>
+                        </f:facet>
+                        <p:commandButton value="Eliminar" styleClass="rounded-button ui-button-danger" action="#{aPersona.eliminarPersona(item)}" update="@form" icon="pi pi-delete-left"/>
+                        <p:commandButton value="Regresar" styleClass="rounded-button ui-button-secondary" process="@this" action="registro_persona" icon="pi pi-undo"/>
                     </p:column>
+
                 </p:dataTable>
             </h:form>
+
         </f:view>
     </h:body>
 </html>

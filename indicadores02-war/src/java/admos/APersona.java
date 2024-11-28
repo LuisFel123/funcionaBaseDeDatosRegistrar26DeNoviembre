@@ -23,6 +23,7 @@ public class APersona implements Serializable {
     @EJB
     private MDPersona mDPersona;
     private Persona perosna;
+    private List<Persona> personas;
 
     public List<Persona> getPersonas() {
         return mDPersona.personas();
@@ -53,10 +54,37 @@ public class APersona implements Serializable {
     }
 
     public void registro() {
-        mDPersona.registrarPersona(perosna);
-        perosna = new Persona();
-    }
-    
-   
+        System.out.println(registrado());
+        if (registrado() == false) {
+            mDPersona.registrarPersona(perosna);
+            perosna = new Persona();
+            personas = getPersonas();
 
+        }
+
+    }
+
+    public void eliminarPersona(Persona p) {
+        mDPersona.eliminarP(p);
+    }
+
+    public boolean registrado() {
+        personas = getPersonas();
+        boolean esta = false;
+        for (Persona p : personas) {
+            esta = perosna.getUsuario().equals(p.getUsuario());
+           // esta = perosna.getUsuario().equals(p.getUsuario()) && perosna.getPassword().equals(p.getPassword());
+
+            if (esta) {
+                return esta;
+            }
+        }
+        return esta;
+    }
+
+    public void registroA() {
+        if (!registrado()) {
+            mDPersona.registrarPersona(perosna);
+        }
+    }
 }

@@ -30,10 +30,24 @@ public class MDPersona {
     public List<Persona> personas() {
         return personaFacade.findAll();
     }
-    
-   
-  
 
+    public void eliminarP(Persona p) {
+        Persona personaExistente = personaFacade.find(p.getIdPersona());
+
+        if (personaExistente != null) {
+            personaFacade.remove(personaExistente);
+        } else {
+            System.out.println("La persona no existe en la base de datos.");
+            throw new IllegalArgumentException("Persona no encontrada.");
+        }
+    }
+
+    /*
+    public void actualizarP(Persona p) {
+        personaFacade.edit(p);
+        
+    }
+     */
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
 }
